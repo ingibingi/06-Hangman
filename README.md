@@ -34,6 +34,57 @@ AbgabeErledigt: false
 ```
 ## Zusammengefasst
 ## Ziele
+- Hangman-Spiel-GUI erstellen
+- Hangman-Spiel-Logik schreiben
 ## ToDo
+- Spiellogik schreiben
 
 # Protokoll
+## Klasse für Spiellogik erstellen
+### Konstruktor
+- Ein neues Spiel braucht das gesuchte Wort "safeword"
+- Der aktuelle Fortschritt soll auch erstellt werden. 
+  - Dabei wird jeder Buchstabe des safewords durch '_' ersetzt.
+```java
+public class GameLogic {
+    String safeword;
+    ArrayList<Character> usedCharacters;
+    String currentSolution;
+    char currentChar;
+    int wrongGuesses = 0;
+    int maxGuesses = 6;
+
+    public GameLogic(String strSafeword){
+        safeword = strSafeword.toUpperCase();
+        int i = 0;
+        while (i<safeword.length()){
+            currentSolution += "_";
+        }
+        currentSolution = currentSolution.trim();
+    }
+```
+### Methode: Hauptspielzug: einen Buchstaben raten
+- Der Buchstabe soll zur Liste der verwendeten Buchstaben hinzugefügt werden
+- Ein falscher Buchstabe soll als solcher erfasst werden
+- Ein richtiger Buchstabe soll an allen Plätzen in der Lösung eingefügt werden
+- Überprüfung ob man das Spiel gewonnen hat
+```java
+public void takeAGuess (Character chCurrenChar){
+    currentChar = Character.toUpperCase(chCurrenChar);
+    int i = safeword.indexOf(currentChar);
+    if(i==(-1)){
+        wrongGuesses++;
+        //ToDo: methode für Fehler
+    }
+    while ((i<safeword.length()) && (i!=(-1))){
+        currentSolution = currentSolution.substring(0,i)
+                +currentChar
+                +currentSolution.substring( i+1);
+    }
+    if (currentSolution.equals(safeword)){
+        //ToDo: methode für Sieg
+    }
+}
+
+```
+- 
