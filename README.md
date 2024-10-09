@@ -185,3 +185,5 @@ public void guessWrong(char chCurrentChar){
         }
     }
 ```
+- ein paar weitere kleine Bugfixes später sieht das Ganze so aus
+![img.png](img.png)
