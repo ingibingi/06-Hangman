@@ -46,7 +46,7 @@ AbgabeErledigt: false
 - Der aktuelle Fortschritt soll auch erstellt werden. 
   - Dabei wird jeder Buchstabe des safewords durch '_' ersetzt.
 ```java
-public class GameLogic {
+public class HangmanGame {
     String safeword;
     ArrayList<Character> usedCharacters;
     String currentSolution;
@@ -54,14 +54,16 @@ public class GameLogic {
     int wrongGuesses = 0;
     int maxGuesses = 6;
 
-    public GameLogic(String strSafeword){
+    public HangmanGame(String strSafeword) {
         safeword = strSafeword.toUpperCase();
         int i = 0;
-        while (i<safeword.length()){
+        while (i < safeword.length()) {
             currentSolution += "_";
         }
         currentSolution = currentSolution.trim();
     }
+    //...
+}
 ```
 ### Methode: Hauptspielzug: einen Buchstaben raten
 - Der Buchstabe soll zur Liste der verwendeten Buchstaben hinzugefügt werden
@@ -85,6 +87,101 @@ public void takeAGuess (Character chCurrenChar){
         //ToDo: methode für Sieg
     }
 }
-
 ```
-- 
+## Erstentwurf GUI für grundlegende Funktionstests
+```java
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GameGUI {
+    private JTextField txtSafeword;
+    private JPanel panel1;
+    private JTextField txtCurrentSolution;
+    private JTextField txtUsedCharacters;
+    private JTextField txtInput;
+    private JButton btnTakeAGuess;
+    private JButton btnNewGame;
+    private HangmanGame myGame;
+
+    public GameGUI() {
+        btnNewGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String safeword = txtSafeword.getText();
+                myGame = new HangmanGame(safeword);
+                txtCurrentSolution.setText(myGame.currentSolution);
+            }
+        });
+        btnTakeAGuess.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String userInput = txtInput.getText();
+                char currentChar = userInput.charAt(0);
+
+                myGame.takeAGuess(currentChar);
+                txtCurrentSolution.setText(myGame.currentSolution);
+
+            }
+        });
+
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Hangman");
+        frame.setContentPane(new GameGUI().panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+- das Programm friert nach klick auf den New Game - Button. 
+  - Das lag daran, dass ich eine endlosschleife im Handgman-Konstruktur prodziert hatte.
+  - Eine sehr änliche Endlosschleife war auch in der takeAGuess-Methode
+  - ich vergaß den Wert von i innerhalb der Schleife erhöhen
+Gefixter Code:
+```java
+    public HangmanGame(String strSafeword){
+        safeword = strSafeword.toUpperCase();
+        currentSolution = "";
+        int i = 0;
+        while (i<safeword.length()){
+            currentSolution += "_";
+            //Fix: The line below
+            i++;
+        }
+        currentSolution = currentSolution.trim();
+    }
+
+    public void takeAGuess (Character chCurrenChar){
+        currentChar = Character.toUpperCase(chCurrenChar);
+        int i = safeword.indexOf(currentChar);
+        if(i==(-1)){
+            wrongGuesses++;
+            //ToDo: methode für Fehler
+        }
+        while ((i<safeword.length()) && (i!=(-1))){
+            currentSolution = currentSolution.substring(0,i)
+                    +currentChar
+                    +currentSolution.substring( i+1);
+            //Fix: the line below
+            i = safeword.indexOf(currentChar,i+1);
+        }
+        if (currentSolution.equals(safeword)){
+            //ToDo: methode für Sieg
+        }
+    }
+```
+
+### Methode für guessWrong
+- wrongGuesses++ wird aus der methode takeAGuess() rausgenommen 
+  - und passenderweise in die neue Methode eingefügt
+```java
+public void guessWrong(char chCurrentChar){
+        wrongGuesses++;
+        if(wrongGuesses >= maxGuesses){
+            //ToDo: methode für Game Over
+        }
+    }
+```
