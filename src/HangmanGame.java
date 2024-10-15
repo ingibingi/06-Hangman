@@ -33,6 +33,7 @@ public class HangmanGame {
                     +currentSolution.substring( i+1);
             i = safeword.indexOf(currentChar,i+1);
         }
+        //Sieg
         if (currentSolution.equals(safeword)){
             usedCharacters = "Congratulations, you win!";
         }
@@ -41,7 +42,7 @@ public class HangmanGame {
     public void guessWrong(char chCurrentChar){
         wrongGuesses++;
         if(wrongGuesses >= maxGuesses){
-            usedCharacters = "You lose";
+            usedCharacters = "You lost to: \""+ safeword + "\"";
         }
     }
 

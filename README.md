@@ -176,14 +176,36 @@ Gefixter Code:
 
 ### Methode für guessWrong
 - wrongGuesses++ wird aus der methode takeAGuess() rausgenommen 
-  - und passenderweise in die neue Methode eingefügt
+- und passenderweise in die neue Methode eingefügt
 ```java
 public void guessWrong(char chCurrentChar){
-        wrongGuesses++;
-        if(wrongGuesses >= maxGuesses){
-            //ToDo: methode für Game Over
-        }
-    }
+  wrongGuesses++;
+  if(wrongGuesses >= maxGuesses){
+    usedCharacters = "You lost to: \""+ safeword + "\"";
+  }
+}
 ```
+
+### Methode für Sieg
+```java
+ public void takeAGuess (Character chCurrenChar) {
+    //...
+    //Sieg
+    if (currentSolution.equals(safeword)) {
+        usedCharacters = "Congratulations, you win!";
+    }
+}
+```
+- Statt einem Array von Chars wird für die verwendeten Buchstaben ein String verwendet
 - ein paar weitere kleine Bugfixes später sieht das Ganze so aus
 ![img.png](img.png)
+### Usability verbessern
+- Bei Klick auf OK: aktuelle eingabe löschen und fokus auf eingabe
+```java
+btnTakeAGuess.addActionListener(new ActionListener() {
+    //...
+    txtInput.setText("");
+    txtInput.grabFocus();
+    //...
+```
+## Hangman Bilder hinzufügen

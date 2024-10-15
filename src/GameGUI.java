@@ -10,6 +10,7 @@ public class GameGUI {
     private JTextField txtInput;
     private JButton btnTakeAGuess;
     private JButton btnNewGame;
+    private JPanel pnlImage;
     private HangmanGame myGame;
 
     public GameGUI() {
@@ -30,6 +31,8 @@ public class GameGUI {
                 myGame.takeAGuess(currentChar);
                 txtCurrentSolution.setText(myGame.currentSolution);
                 txtUsedCharacters.setText(myGame.usedCharacters);
+                txtInput.setText("");
+                txtInput.grabFocus();
             }
         });
 
