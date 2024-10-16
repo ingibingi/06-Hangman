@@ -44,6 +44,7 @@ public class HangmanGame {
         if(wrongGuesses >= maxGuesses){
             usedCharacters = "You lost to: \""+ safeword + "\"";
         }
+
     }
 
 

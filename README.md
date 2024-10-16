@@ -209,3 +209,5 @@ btnTakeAGuess.addActionListener(new ActionListener() {
     //...
 ```
 ## Hangman Bilder hinzufügen
+- Ich schaffe es nicht, das erste Bild hinzuzufügen.
+- Anscheinend funktioniert das nicht in der Main methode.
