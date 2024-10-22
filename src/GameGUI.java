@@ -29,6 +29,7 @@ public class GameGUI {
                 String safeword = txtSafeword.getText();
                 myGame = new HangmanGame(safeword);
                 txtCurrentSolution.setText(myGame.currentSolution);
+                txtSafeword.setText("");
             }
         });
 
@@ -60,7 +61,8 @@ public class GameGUI {
 
     public static void main(String[] args) throws IOException {
         JFrame frame = new JFrame("Hangman");
-        frame.setContentPane(new GameGUI().pnlGameplay);
+        GameGUI myGameGUI = new GameGUI();
+        frame.setContentPane(myGameGUI.pnlGameplay);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.pack();
